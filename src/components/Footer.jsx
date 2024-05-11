@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/images/jobpedia.png"
 
+import { FaLocationDot,   } from "react-icons/fa6";
+import { FaPhoneAlt } from "react-icons/fa";
+import { MdOutlineMail } from "react-icons/md";
+
+
+
+
 const Footer = () => {
     return (
         <footer className="bg-white dark:bg-gray-900">
@@ -15,7 +22,7 @@ const Footer = () => {
                                 </div>
                             </Link>
 
-                            <p className="max-w-sm mt-2 text-gray-500 dark:text-gray-400">is a job-seeking platform designed to connect job seekers with relevant job listings in various categories, including on-site, remote, hybrid, and part-time positions.</p>
+                            <p className="max-w-sm mt-2 text-slate-500 dark:text-gray-400 font-medium">is a job-seeking platform designed to connect job seekers with relevant job listings in various categories, including on-site, remote, hybrid, and part-time positions.</p>
 
                             <div className="flex mt-6 -mx-2">
                                 <a href="#"
@@ -52,32 +59,34 @@ const Footer = () => {
                     </div>
 
                     <div className="mt-6 lg:mt-0 lg:flex-1">
-                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            <div>
-                                <h3 className="text-gray-700 uppercase dark:text-white">About</h3>
-                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">Company</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">community</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">Careers</a>
-                            </div>
+                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
+                          
+
+                            
+
+                       
 
                             <div>
-                                <h3 className="text-gray-700 uppercase dark:text-white">Blog</h3>
-                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">Tec</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">Music</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">Videos</a>
-                            </div>
-
-                            <div>
-                                <h3 className="text-gray-700 uppercase dark:text-white">Products</h3>
-                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">Mega cloud</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">Aperion UI</a>
-                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">Meraki UI</a>
-                            </div>
-
-                            <div>
-                                <h3 className="text-gray-700 uppercase dark:text-white">Contact</h3>
-                                <span className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">+1 526 654 8965</span>
-                                <span className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">example@email.com</span>
+                                <h3 className="text-gray-700 uppercase dark:text-white font-bold font-poppins">Contact</h3>
+                              
+                                <div className="flex items-center mt-2 text-sm text-gray-600 dark:text-gray-400 gap-2">
+                                <span className="text-blue-500"><FaPhoneAlt /></span>
+                                <h2 className="font-poppins font-extrabold">Phone:</h2>
+                               
+                                </div>
+                                <h3 className="hover:text-blue-700 font-poppins">01798273480</h3>
+                                <div className="flex items-center mt-2 text-sm text-gray-600 dark:text-gray-400 gap-2">
+                                <span className="text-blue-500"><MdOutlineMail/></span>
+                                <h2 className="font-poppins font-extrabold">Gmail:</h2>
+                                
+                                </div>
+                                <h3 className="hover:text-blue-700 font-poppins">jobpedia@gmail.com</h3>
+                                <div className="flex items-center mt-2 text-sm text-gray-600 dark:text-gray-400 gap-2">
+                                <span className="text-blue-500"><FaLocationDot /></span>
+                                <h2 className="font-poppins font-extrabold">Address:</h2>
+                                
+                                </div>
+                                <h3 className="font-poppins">Duet, Joydebpur, Gazipur.</h3>
                             </div>
                         </div>
                     </div>
@@ -86,7 +95,7 @@ const Footer = () => {
                 <hr className="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" />
 
                 <div>
-                    <p className="text-center text-gray-500 dark:text-gray-400">© JobPedia 2024 - All rights reserved</p>
+                    <p className="text-center text-slate-500 dark:text-gray-400">© JobPedia 2024 - All rights reserved</p>
                 </div>
             </div>
         </footer>
