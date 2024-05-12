@@ -86,7 +86,7 @@ const Navbar = () => {
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar tooltip " data-tip={user?.displayName || 'user name not found'}>
                                 <div className="w-full rounded-full" >
 
-                                    <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                                    <img alt="user profile photo" referrerPolicy="no-referrer" src={user?.photoURL} />
 
                                 </div>
 
