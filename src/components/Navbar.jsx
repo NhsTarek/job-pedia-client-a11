@@ -53,7 +53,7 @@ const Navbar = () => {
 
     </>
     return (
-        <div className="navbar bg-base-100 my-5 flex items-center justify-center">
+        <div className="navbar bg-[#FFFFFF] py-5 flex items-center justify-center shadow-[#b3f0ff] shadow-md ">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

@@ -5,10 +5,14 @@ import Footer from "../components/Footer";
 
 const Main = () => {
     return (
-        <div className="max-w-6xl mx-auto">
+        <div className=" bg-[#F0F0FA] my-5 ">
             <Navbar></Navbar>
+          <div className="max-w-6xl my-5 mx-auto">
+          
             <Outlet></Outlet>
-            <Footer></Footer>
+            
+          </div>
+          <Footer></Footer>
         </div>
     );
 };
