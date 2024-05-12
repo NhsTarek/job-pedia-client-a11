@@ -1,9 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import Carousel from "../components/Carousel";
 import JobCategories from "../components/JobCategories";
+import { useLoaderData } from "react-router-dom";
 
 
 const Home = () => {
+ 
     return (
         <div>
             <Helmet>

@@ -22,7 +22,7 @@ import Slide from './Slide';
 export default function Carousel() {
     return (
         <>
-            <Swiper className="my-5"
+            <Swiper 
                 spaceBetween={30}
                 centeredSlides={true}
                 loop={true}
