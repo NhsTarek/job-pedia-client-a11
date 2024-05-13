@@ -1,32 +1,51 @@
-import { useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import DatePicker from "react-datepicker";
+import axios from 'axios';
+
+import "react-datepicker/dist/react-datepicker.css";
+import toast from "react-hot-toast";
 
 
 const JobDetails = () => {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext)
   const job = useLoaderData();
   const { _id, jobTitle, category, postedBy, postingDate, applicationDeadline, salaryRange, applicants, description } = job || {}
 
+  const [startDate, setStartDate] = useState(new Date());
+
 
 
   const handleSubmit = async e =>{
+   
     e.preventDefault();
+   
     const form = e.target;
     const jobId = _id;
     const buyer = postedBy;
     const email = form.email.value;
     const userName = form.username.value;
+    const deadline = startDate;
     const resume = form.resume.value;
 
-    const applyData = {
+    const bidData = {
       jobId,
       buyer,
       email,
       userName,
+      deadline,
       resume
     }
-    console.table(applyData);
+    console.table(bidData);
+    try{
+      const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/bid`, bidData)
+      console.log(data);
+      
+    } catch (err){
+      console.log(err);
+    }
 
   }
   return (
@@ -79,7 +98,7 @@ const JobDetails = () => {
             <a href="#my_modal_8" className="btn btn-block bg-blue-600">Apply Now</a>
             {/* Put this part before </body> tag */}
             <div className="modal" role="dialog" id="my_modal_8">
-              <div className="modal-box">
+              <div className="modal-box py-28">
                 <form onSubmit={handleSubmit}>
                   <div className='grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2'>
                     <div>
@@ -124,11 +143,13 @@ const JobDetails = () => {
                       <label className='text-gray-700'>Deadline</label>
 
                       {/* Date Picker Input Field */}
+                      <DatePicker className="border py-2 px-3 rounded-md" selected={startDate} onChange={(date) => setStartDate(date)} />
                     </div>
                   </div>
 
                   <div className='flex justify-center mt-6'>
                     <button
+                    
                     
                       type='submit'
                       className='px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600'
