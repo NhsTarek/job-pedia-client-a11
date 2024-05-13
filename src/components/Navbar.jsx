@@ -46,9 +46,9 @@ const Navbar = () => {
         <li className="font-poppins font-bold"><NavLink to="/">Home</NavLink></li>
         <li className="font-poppins font-bold"><NavLink to="/allArts&Crafts"> All Jobs</NavLink></li>
         <li className="font-poppins font-bold"><NavLink to="/addCraftItem">Applied Jobs</NavLink></li>
-        <li className="font-poppins font-bold"><NavLink to="/myCraftList"> Add A Job</NavLink></li>
-        <li className="font-poppins font-bold"><NavLink to="/myCraftList"> My Jobs</NavLink></li>
-        <li className="font-poppins font-bold"><NavLink to="/errorpage"> 404 Page</NavLink></li>
+        <li className="font-poppins font-bold"><NavLink to="/add-job"> Add A Job</NavLink></li>
+        <li className="font-poppins font-bold"><NavLink to="/my-jobs"> My Jobs</NavLink></li>
+        
 
 
     </>

@@ -1,30 +1,31 @@
 import { useContext, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
-import "react-datepicker/dist/react-datepicker.css";
+
 import toast from "react-hot-toast";
 
 
 const JobDetails = () => {
-  const navigate = useNavigate();
+ 
   const { user } = useContext(AuthContext)
   const job = useLoaderData();
-  const { _id, jobTitle, category, postedBy, postingDate, applicationDeadline, salaryRange, applicants, description } = job || {}
+  const { _id, jobTitle, category, postedBy, postingDate, applicationDeadline, salaryRange, applicants, description,buyerEmail } = job || {}
 
   const [startDate, setStartDate] = useState(new Date());
 
 
 
   const handleSubmit = async e =>{
-   
+  
     e.preventDefault();
    
     const form = e.target;
     const jobId = _id;
-    const buyer = postedBy;
+    const postedBy = postedBy;
     const email = form.email.value;
     const userName = form.username.value;
     const deadline = startDate;
@@ -32,11 +33,12 @@ const JobDetails = () => {
 
     const bidData = {
       jobId,
-      buyer,
+      postedBy,
       email,
       userName,
       deadline,
-      resume
+      resume, 
+      buyerEmail
     }
     console.table(bidData);
     try{
@@ -80,11 +82,11 @@ const JobDetails = () => {
               </li>
               <li className="mb-4">
                 <span className="font-bold mr-2">Posting Date:</span>
-                {postingDate}
+                {new Date(postingDate).toLocaleDateString()}
               </li>
               <li className="mb-4">
                 <span className="font-bold mr-2">Application Deadline:</span>
-                {applicationDeadline}
+                {new Date(applicationDeadline).toLocaleDateString()}
               </li>
               <li className="mb-4">
                 <span className="font-bold mr-2">Salary Range:</span>
