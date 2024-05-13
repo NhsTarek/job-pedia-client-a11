@@ -18,8 +18,8 @@ const AddJob = () => {
         const form = e.target;
         const jobTitle = form.jobTitle.value;
         const jobBanner = form.jobBanner.value;
-        const postedBy = form.userName.value;
-        const userEmail = form.userEmail.value;
+        const name = form.userName.value;
+        const email = form.userEmail.value;
         const category = form.jobCategory.value;
         const salaryRange = form.salaryRange.value;
         const postingDate = form.postingDate.value;
@@ -31,14 +31,17 @@ const AddJob = () => {
 
             jobTitle,
             jobBanner,
-            postedBy,
-            userEmail,
             category,
             salaryRange,
             postingDate,
             applicants,
             applicationDeadline,
-            description
+            description,
+            buyer: {
+                email,
+                name,
+                photo : user?.photoURL
+            }
 
 
         }

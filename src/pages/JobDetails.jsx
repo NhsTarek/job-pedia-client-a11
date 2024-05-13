@@ -13,21 +13,22 @@ const JobDetails = () => {
  
   const { user } = useContext(AuthContext)
   const job = useLoaderData();
-  const { _id, jobTitle, category, postedBy, postingDate, applicationDeadline, salaryRange, applicants, description,buyerEmail } = job || {}
+  const { _id, jobTitle, category, postingDate, applicationDeadline, salaryRange, applicants, description,buyer } = job || {}
 
   const [startDate, setStartDate] = useState(new Date());
 
 
 
   const handleSubmit = async e =>{
-  
     e.preventDefault();
+   if(user?.email === buyer?.email) 
+    return toast.error('can not apply in own job')
+   
    
     const form = e.target;
     const jobId = _id;
-    const postedBy = postedBy;
-    const email = form.email.value;
-    const userName = form.username.value;
+    const postedBy = form.username.value;
+    const email = user?.email;
     const deadline = startDate;
     const resume = form.resume.value;
 
@@ -35,10 +36,9 @@ const JobDetails = () => {
       jobId,
       postedBy,
       email,
-      userName,
       deadline,
       resume, 
-      buyerEmail
+      buyer
     }
     console.table(bidData);
     try{
@@ -78,7 +78,11 @@ const JobDetails = () => {
               </li>
               <li className="mb-4">
                 <span className="font-bold mr-2">Posted By:</span>
-                {postedBy}
+                {buyer?.name}
+              </li>
+              <li className="mb-4">
+                <span className="font-bold mr-2">email:</span>
+                {buyer?.email}
               </li>
               <li className="mb-4">
                 <span className="font-bold mr-2">Posting Date:</span>

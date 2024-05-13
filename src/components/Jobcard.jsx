@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 
 const Jobcard = ({job}) => {
-    const {_id, jobTitle, category, applicationDeadline,applicants, postedBy} = job;
+    const {_id, jobTitle, category, applicationDeadline,applicants, buyer} = job;
     return (
         <div>
             <div className="max-w-2xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -21,7 +21,7 @@ const Jobcard = ({job}) => {
 
                 <div className="flex items-center">
                        
-                        <a className="font-bold  text-gray-700 cursor-pointer dark:text-gray-200" tabIndex="0" role="link"><span>Posted By: </span>  {postedBy}</a>
+                        <a className="font-bold  text-gray-700 cursor-pointer dark:text-gray-200" tabIndex="0" role="link"><span>Posted By: </span>  {buyer?.name}</a>
                     </div>
                     <Link to={`/job/${_id}`} className="text-blue-600 dark:text-blue-400 hover:underline" tabIndex="0" role="link">View Details</Link>
 
