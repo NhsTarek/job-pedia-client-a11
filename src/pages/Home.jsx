@@ -1,7 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import Carousel from "../components/Carousel";
 import JobCategories from "../components/JobCategories";
-import { useLoaderData } from "react-router-dom";
+import GrowTalent from "../components/GrowTalent";
+
 
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
             </Helmet>
             <Carousel></Carousel>
             <JobCategories></JobCategories>
+            <GrowTalent></GrowTalent>
         </div>
     );
 };

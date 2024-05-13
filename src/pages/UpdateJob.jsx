@@ -1,19 +1,22 @@
 import { useContext, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { AuthContext } from "../provider/AuthProvider";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-
-const AddJob = () => {
-    const { user } = useContext(AuthContext)
-    const navigate = useNavigate()
-
-    const [startDate, setStartDate] = useState(new Date());
 
 
-    const handleAddJob = async e => {
+const UpdateJob = () => {
+    const job = useLoaderData();
+    const navigate = useNavigate();
+    const {jobTitle, jobBanner, category,  salaryRange, postingDate, applicants, applicationDeadline,_id,  description,} = job;
+
+    const {user} = useContext(AuthContext);
+  
+  
+    const [startDate, setStartDate] = useState(new Date(applicationDeadline) || new Date());
+    const handleUpdateJob = async e => {
         e.preventDefault();
         const form = e.target;
         const jobTitle = form.jobTitle.value;
@@ -41,24 +44,28 @@ const AddJob = () => {
                 email,
                 name,
                 photo : user?.photoURL
-            }
+            },
 
 
         }
-        try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/job`, jobData)
+         try{
+            const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/job/${_id}`, jobData)
             console.log(data);
-            toast.success('Added job successfully')
+            toast.success('updated job successfully')
             navigate('/my-jobs')
 
         } catch (err) {
             console.log(err);
+            toast.error(err.message)
         }
     }
+
+   
+
     return (
         <div className="max-w-3xl mx-auto px-4 py-8 font-poppins">
-            <h2 className="text-2xl text-center font-bold mb-4">Add a New Job</h2>
-            <form onSubmit={handleAddJob} className="space-y-4">
+            <h2 className="text-2xl text-center font-bold mb-4">Update the current job</h2>
+            <form onSubmit={handleUpdateJob}  className="space-y-4">
                 <div className="flex flex-wrap -mx-2">
                     <div className="w-full md:w-1/2 px-2 mb-4">
                         <label htmlFor="jobBanner" className="block text-sm font-semibold mb-1">
@@ -68,6 +75,7 @@ const AddJob = () => {
                             type="text"
                             id="jobBanner"
                             name="jobBanner"
+                            defaultValue={jobBanner}
                             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                             placeholder="Enter URL"
                         />
@@ -77,6 +85,7 @@ const AddJob = () => {
                             Job Title
                         </label>
                         <input
+                        defaultValue={jobTitle}
                             type="text"
                             id="jobTitle"
                             name="jobTitle"
@@ -122,10 +131,11 @@ const AddJob = () => {
                     <select
                         id="jobCategory"
                         name="jobCategory"
+                        defaultValue={category}
                         required
                         className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                     >
-                        <option value="">Select Category</option>
+                        
                         <option value="On-Site">On-Site</option>
                         <option value="Remote">Remote</option>
                         <option value="Hybrid">Hybrid</option>
@@ -141,6 +151,7 @@ const AddJob = () => {
                             type="text"
                             id="salaryRange"
                             name="salaryRange"
+                            defaultValue={salaryRange}
                             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                             placeholder="Enter Salary Range"
                         required
@@ -155,6 +166,7 @@ const AddJob = () => {
                             type="date"
                             id="postingDate"
                             name="postingDate"
+                            defaultValue={postingDate}
                             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                         required
 
@@ -192,6 +204,7 @@ const AddJob = () => {
                     <textarea
                         id="jobDescription"
                         name="jobDescription"
+                        defaultValue={description}
                         className="w-full h-32 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                         placeholder="Enter Job Description"
                         required
@@ -203,7 +216,7 @@ const AddJob = () => {
                         type="submit"
                         className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                     >
-                        Add Job
+                        Update Job
                     </button>
                 </div>
             </form>
@@ -211,4 +224,4 @@ const AddJob = () => {
     );
 };
 
-export default AddJob;
+export default UpdateJob;
