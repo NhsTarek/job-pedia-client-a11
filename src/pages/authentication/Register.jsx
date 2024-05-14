@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import regBg from "../../assets/images/rege.jpg"
 import logo from "../../assets/images/jobpedia.png"
 import { useContext } from "react"
@@ -8,14 +8,16 @@ import toast from "react-hot-toast"
 const Register = () => {
 
   const navigate = useNavigate()
+  const location = useLocation()
+  
 
   const {signInWithGoogle, createUser, updateUserProfile, user, setUser} = useContext(AuthContext);
-
+  const from = location.state || '/'
   const handleGoogleSignIn = async() =>{
     try{
       await signInWithGoogle()
       toast.success('Login Successful')
-      navigate('/')
+      navigate(from, {replace: true})
     }
     catch(err){
       console.log(err);
@@ -36,7 +38,7 @@ const Register = () => {
       console.log(result);
       await updateUserProfile(name,photo);
       setUser({...user, photoURL:photo, displayName: name})
-      navigate('/')
+      navigate(from, {replace: true})
       toast.success('Registration Successful')
     }
     catch(err){
