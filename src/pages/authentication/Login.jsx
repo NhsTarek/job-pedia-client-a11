@@ -1,9 +1,10 @@
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import logo from "../../assets/images/jobpedia.png"
 import loginBg from "../../assets/images/login.jpg"
 import { useContext, useEffect } from "react"
 import { AuthContext } from "../../provider/AuthProvider"
 import toast from "react-hot-toast"
+import axios from "axios"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -23,7 +24,11 @@ const Login = () => {
 
   const handleGoogleSignIn = async() =>{
     try{
-      await signInWithGoogle()
+     const result = await signInWithGoogle()
+     console.log(result.user);
+     const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {
+      email: result?.user?.email},{withCredentials:true})
+     console.log(data);
       toast.success('Login Successful')
       navigate(from, {replace: true})
     }

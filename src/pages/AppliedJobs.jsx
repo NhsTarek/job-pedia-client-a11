@@ -128,7 +128,7 @@ const AppliedJobs = () => {
                           title=''
                           className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'
                         >
-                          {appliedJob.description.substring(0, 18)}...
+                          {appliedJob.description}...
                         </td>
                         <td className='px-4 py-4 text-sm whitespace-nowrap'>
                           <div className='flex items-center gap-x-6'>

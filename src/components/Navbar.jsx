@@ -48,6 +48,7 @@ const Navbar = () => {
         <li className="font-poppins font-bold"><NavLink to="/applied-jobs">Applied Jobs</NavLink></li>
         <li className="font-poppins font-bold"><NavLink to="/add-job"> Add A Job</NavLink></li>
         <li className="font-poppins font-bold"><NavLink to="/my-jobs"> My Jobs</NavLink></li>
+        <li className="font-poppins font-bold"><NavLink to="/blogs"> Blogs</NavLink></li>
         
 
 
