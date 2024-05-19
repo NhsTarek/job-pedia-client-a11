@@ -1,35 +1,57 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState, } from "react";
 import { AuthContext } from "../provider/AuthProvider";
-import axios from "axios";
+
 import toast from "react-hot-toast";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 
 const AppliedJobs = () => {
+  const [filter, setFilter] = useState([''])
+  const axiosSecure = useAxiosSecure()
+  const queryClient = useQueryClient()
   const { user } = useContext(AuthContext);
+ 
 
-  const [appliedJobs, setAppliedJobs] = useState([]);
 
-  useEffect(() => {
+  const {data: appliedJobs = [], isLoading} = useQuery({
+    queryFn: () =>getData(),
+    queryKey: ['appliedJobs', user?.email]
+})
 
-    getData()
-  }, [user])
+ 
   console.log(appliedJobs);
+  console.log(isLoading);
 
   const getData = async () => {
-    const { data } = await axios(`${import.meta.env.VITE_API_URL}/my-applied-jobs/${user?.email}`)
-    setAppliedJobs(data)
+    const { data } = await axiosSecure(`/my-applied-jobs/${user?.email}&filter=${filter}`)
+    return(data)
   }
 
   console.log(appliedJobs);
 
+
+  const {mutateAsync} =  useMutation({
+    mutationFn: async ({id}) =>{
+        const {data} = await axiosSecure.delete(`/my-applied-jobs/${id}`)
+        console.log(data);
+
+    },
+    onSuccess: () =>{
+        toast.success('Successfully deleted applied jobs')
+        // refetch()
+        queryClient.invalidateQueries({queryKey: ['appliedJobs']})
+    }
+    // mutationKey:
+})
+
+
+
+
   const handleDelete = async id =>{
     try{
-        const {data} = await axios.delete(
-            `${import.meta.env.VITE_API_URL}/my-applied-jobs/${id}`
-        )
-        console.log(data);
-        toast.success('Cancelled applied job successfully')
-        getData()
+      
+        await  mutateAsync({id, status})
     }catch (err){
         console.log(err.message);
         toast.error(err.message)
@@ -40,6 +62,8 @@ const AppliedJobs = () => {
 
   return (
     <section className='container px-4 mx-auto pt-12'>
+      
+     
       <div className='flex items-center gap-x-3'>
         <h2 className='text-lg font-medium text-gray-800 '>My Bids</h2>
 
@@ -91,7 +115,7 @@ const AppliedJobs = () => {
                       scope='col'
                       className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'
                     >
-                      Description
+                     Posted By
                     </th>
 
                     <th className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'>
@@ -128,7 +152,7 @@ const AppliedJobs = () => {
                           title=''
                           className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'
                         >
-                          {appliedJob.description}...
+                          {appliedJob.buyer.name}
                         </td>
                         <td className='px-4 py-4 text-sm whitespace-nowrap'>
                           <div className='flex items-center gap-x-6'>

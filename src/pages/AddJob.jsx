@@ -2,13 +2,14 @@ import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../provider/AuthProvider";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AddJob = () => {
     const { user } = useContext(AuthContext)
     const navigate = useNavigate()
+    const axiosSecure = useAxiosSecure()
 
     const [startDate, setStartDate] = useState(new Date());
 
@@ -23,7 +24,6 @@ const AddJob = () => {
         const category = form.jobCategory.value;
         const salaryRange = form.salaryRange.value;
         const postingDate = form.postingDate.value;
-        const applicants = form.applicantsNumber.value;
         const applicationDeadline = startDate;
         const description = form.jobDescription.value;
 
@@ -34,19 +34,19 @@ const AddJob = () => {
             category,
             salaryRange,
             postingDate,
-            applicants,
             applicationDeadline,
             description,
             buyer: {
                 email,
                 name,
                 photo : user?.photoURL
-            }
+            },
+            applicants: 0,
 
 
         }
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/job`, jobData)
+            const { data } = await axiosSecure.post(`/job`, jobData)
             console.log(data);
             toast.success('Added job successfully')
             navigate('/my-jobs')
@@ -180,7 +180,7 @@ const AddJob = () => {
                             id="applicantsNumber"
                             name="applicantsNumber"
                             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                            defaultValue="0"
+                            // defaultValue="0"
                             readOnly
                         />
                     </div>

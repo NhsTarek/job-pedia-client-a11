@@ -1,34 +1,53 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import {  useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 
 const MyJobs = () => {
-     const axiosSecure = useAxiosSecure()
     const {user} = useContext(AuthContext);
-    const [jobs, setJobs] = useState([]);
+     const axiosSecure = useAxiosSecure()
+     const queryClient = useQueryClient()
+   
 
-
-    useEffect(() =>{
     
-        getData()
-    }, [user])
+
+   const {data: jobs = [], isLoading} = useQuery({
+        queryFn: () =>getData(),
+        queryKey: ['jobs', user?.email]
+    })
+
+   
     console.log(jobs);
 
     const getData = async() =>{
         const {data} = await axiosSecure(`/jobs/${user?.email}`)
-        setJobs(data)
+       return(data)
     }
+
+
+  const {mutateAsync} =  useMutation({
+        mutationFn: async ({id, status}) =>{
+            const {data} = await axiosSecure.delete(`/job/${id}`)
+            console.log(data);
+
+        },
+        onSuccess: () =>{
+            toast.success('Successfully deleted job')
+            // refetch()
+            queryClient.invalidateQueries({queryKey: ['jobs']})
+        }
+        // mutationKey:
+    })
 
     const handleDelete = async id =>{
         try{
-            const {data} = await axiosSecure.delete(`/job/${id}`)
-            console.log(data);
-            toast.success('Successfully deleted')
-            getData()
+           
+            
+            
+          await  mutateAsync({id, status})
         }catch (err){
             console.log(err.message);
             toast.error(err.message)
@@ -36,7 +55,7 @@ const MyJobs = () => {
 
     }
 
-   
+   if(isLoading) return <p>Data is loading.....</p>
     return (
         <div>
             <section className='container px-4 mx-auto pt-12'>

@@ -1,8 +1,28 @@
-# React + Vite
+# JobPedia
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
 
-Currently, two official plugins are available:
+### All Jobs Page
+- **Search Functionality**: Easily search for jobs by keywords.
+- **Filter Options**: Filter jobs by location, category, job type, and salary range.
+- **Sort Function**: Sort jobs by relevance, date posted, or salary.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Blogs Page
+- **Latest Job Related post**: Stay updated with the latest trends and news in the job market.
+- **Career Advice**: Read articles and tips on career development, interview preparation, and resume building.
+
+### Add a Job Page
+- **Post a Job**: Employers can post job openings by filling out a simple form.
+- **Job Details**: Include details such as job title, description, requirements, location, and salary.
+
+### Applied Jobs Page
+- **Track Applications**: View a list of jobs you have applied for.
+- **Application Status**: Check the status of your applications (e.g., pending, reviewed, interviewed).
+
+### My Jobs Page
+- **Manage Posted Jobs**: Employers can view and manage the jobs they have posted.
+- **Edit Job Listings**: Update job details or close job postings when the position is filled.
+
+## Live Link
+
+Check out the live version of the JobPedia [here](https://job-pedia-f0a8f.web.app/).

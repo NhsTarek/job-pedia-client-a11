@@ -1,21 +1,34 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Jobcard from './Jobcard';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+
+
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 const JobCategories = () => {
+    const axiosSecure = useAxiosSecure()
+    const queryClient = useQueryClient()
+    // const [jobs, setJobs] = useState([])
 
-    const [jobs, setJobs] = useState([])
 
-    useEffect(() =>{
+
+    const {data: jobs = [],} = useQuery({
+        queryFn: () =>getData(),
+        queryKey: ['jobs']
+    })
+
+    console.log(jobs);
+
+    // useEffect(() =>{
 
         const getData = async() => {
-           const {data} = await axios(`${import.meta.env.VITE_API_URL}/jobs`)
-           setJobs(data)
+           const {data} = await axiosSecure(`/jobs`)
+           return data
         }
-        getData()
-    },[])
+        // getData()
+    // },[])
+   
     return (
 
         <Tabs>

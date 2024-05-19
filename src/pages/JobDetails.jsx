@@ -3,21 +3,24 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import axios from 'axios';
-
-
 import toast from "react-hot-toast";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+
+
 
 
 const JobDetails = () => {
+  const axiosSecure = useAxiosSecure()
+  
+
  
   const { user } = useContext(AuthContext)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const job = useLoaderData();
-  const { _id, jobTitle, category, postingDate, applicationDeadline, salaryRange, applicants, description,buyer } = job || {}
+  const { _id, jobTitle, category, postingDate, applicationDeadline, salaryRange, applicants, description,buyer, jobBanner } = job || {}
 
   const [startDate, setStartDate] = useState(new Date());
-
+ 
 
 
   const handleSubmit = async e =>{
@@ -46,15 +49,23 @@ const JobDetails = () => {
       buyer
     }
     console.table(bidData);
+
+
+
+
+
     try{
-      const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/bid`, bidData)
+      const {data} = await axiosSecure.post(`/bid`, bidData)
       console.log(data);
       toast.success('Applied successfully')
       navigate('/applied-jobs')
       
       
     } catch (err){
-      console.log(err);
+      toast.error(err.response.data);
+      e.target.reset();
+      
+      
     }
 
   }
@@ -65,9 +76,11 @@ const JobDetails = () => {
         <div className="lg:w-full lg:order-2 relative overflow-hidden font-poppins">
           <div className="bg-white   p-6 lg:p-8 z-10">
             <h2 className="text-2xl bg-[#F0F0FA] p-5 lg:text-3xl font-bold mb-4">Job Description</h2>
+            <img className="object-center my-10 w-full h-64 rounded-lg lg:h-80" src={jobBanner} alt='' />
             <p className="text-gray-700 leading-relaxed">
               {description}
             </p>
+            
           </div>
         </div>
 
@@ -171,8 +184,10 @@ const JobDetails = () => {
                     >
                       Submit
                     </button>
+                    
                   </div>
                 </form>
+                
               </div>
             </div>
           </div>
